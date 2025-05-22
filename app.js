@@ -4,13 +4,14 @@ const app = express();
 
 require("dotenv").config();
 
+const Name = 'boiler-plate'
 
-const PORT = process.env.PORT || 3003
+const PORT = process.env.PORT
 app.use(express.json());
 
 connectDB()
 
 
 app.listen(PORT, () => {
-  console.log(`Server started successfully at http://localhost:${PORT} - Alziyara Admin Backend Service!`); 
+  console.log(`Server started successfully at http://localhost:${PORT} - ${Name} backend service!`); 
 });
