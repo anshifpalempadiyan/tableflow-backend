@@ -1,16 +1,20 @@
-const express = require("express");
-const connectDB = require("./src/config/db");
+import express from 'express'
+import connectDB from './src/config/db.js';
+import dotenv from 'dotenv'
+
+dotenv.config();
+
 const app = express();
+const Name = 'tableflow'
+const PORT = process.env.PORT || 3003
 
-require("dotenv").config();
 
-const Name = 'boiler-plate'
 
-const PORT = process.env.PORT
+
 app.use(express.json());
 
 connectDB()
-console.log("hlo")
+
 
 app.listen(PORT, () => {
   console.log(`Server started successfully at http://localhost:${PORT} - ${Name} backend service!`); 
