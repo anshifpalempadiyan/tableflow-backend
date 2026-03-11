@@ -1,9 +1,8 @@
 {
   "name": "name-of-project",
   "version": "1.0.0",
-  "type" : "module",
+  "type": "module",
   "description": "",
-
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js"
@@ -11,9 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "dotenv": "^16.5.0",
-    "express": "^4.21.2",
+    "express": "^4.22.1",
+    "jsonwebtoken": "^9.0.3",
     "mongoose": "^8.0.1",
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.14"
   }
 }
