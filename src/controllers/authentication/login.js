@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt'
 import User from '../../models/user.js'
 import jwt from 'jsonwebtoken'
 import generateAccessToken from '../../helpers/authenticationHelpers/generateAccessToken.js'
+import RefreshToken from "../../models/refreshToken.js"
 
 
 
@@ -29,6 +30,15 @@ const loginAuthentication = async (req, res) => {
                 })
                 // console.log("username of refresh ",{userName})
                 const refreshToken = jwt.sign({ userName }, process.env.REFRESH_TOKEN_SECRET)
+                const userRefreshTokenData = await RefreshToken.findOne({ userId : userData._id })
+                if ( userRefreshTokenData ) {
+                    const existingUserData = await RefreshToken.updateOne({ userId : userData._id } , { $set : { refreshToken : refreshToken }})
+                    console.log( existingUserData , "user already existed and updated the token ")
+                } else {
+                    const newUser = await new RefreshToken({ userId : userData._id , refreshToken : refreshToken }).save()
+                    console.log( newUser , "new user token created  ")
+                }
+                console.log(refreshToken,"tokekldkfjdkjfkjdjfjdjdk")
                 res.cookie('refreshToken' , refreshToken , { 
                     httpOnly : true,
                     secure : true ,
