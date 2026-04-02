@@ -4,6 +4,7 @@ import loginAuthentication from '../../controllers/authentication/login.js'
 import username from '../../controllers/authentication/username.js'
 import authenticateToken from '../../helpers/authenticationHelpers/authenticateToken.js'
 import refreshAuthentication from '../../controllers/authentication/refresh.js'
+import logoutAuthentication from '../../controllers/authentication/logout.js'
 
 
 const router = express.Router()
@@ -12,6 +13,7 @@ router.post('/signup',signupAuthentication)
 router.post('/login'  ,loginAuthentication)
 router.get('/username', authenticateToken ,username)
 router.post('/refresh', refreshAuthentication)
+router.delete('/logout' , logoutAuthentication )
 
 
 
