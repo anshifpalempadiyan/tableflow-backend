@@ -5,7 +5,7 @@ import RefreshToken from "../../models/refreshToken.js"
 const logoutAuthentication = async( req , res ) => {
     try {
         const refreshToken = req.cookies?.refreshToken
-        const refreshTokenData = await RefreshToken.findOneAndDelete({ refreshToken : refreshToken })
+        const refreshTokenData = await RefreshToken.findOneAndUpdate({ refreshToken : refreshToken } , { $set: { refreshToken: null } })
 
         if ( !refreshTokenData ) {
             return res.json({ msg : "Refresh token not found"})
