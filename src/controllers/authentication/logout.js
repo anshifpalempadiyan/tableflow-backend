@@ -10,6 +10,8 @@ const logoutAuthentication = async( req , res ) => {
         if ( !refreshTokenData ) {
             return res.json({ msg : "Refresh token not found"})
         } else {
+            res.clearCookie('accessToken' , { path : '/' })
+            res.clearCookie('refreshToken' , { path : '/' })
             return res.json({ msg : "Refresh token deleted"})
         }
         

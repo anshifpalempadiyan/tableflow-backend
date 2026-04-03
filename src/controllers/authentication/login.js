@@ -24,13 +24,14 @@ const loginAuthentication = async (req, res) => {
             const isPasswordMatching = await bcrypt.compare(password, userData.password)
             if (isPasswordMatching) {
                 const userRefreshTokenData = await RefreshToken.findOne({ userId: userData._id })
+                const id = userData._id
                 if (userRefreshTokenData) {
-                    const accessToken = generateAccessToken({ userName })
+                    const accessToken = generateAccessToken({ id })
                 res.cookie('accessToken', accessToken, {
                     httpOnly: true,
                     secure: true,
                 })
-                const refreshToken = generateRefreshToken({ userName })
+                const refreshToken = generateRefreshToken({ id })
                 res.cookie('refreshToken', refreshToken, {
                     httpOnly: true,
                     secure: true,

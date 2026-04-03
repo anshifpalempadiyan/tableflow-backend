@@ -16,14 +16,14 @@ const signupAuthentication = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10)
         const user = await new User({ userName, password: hashedPassword, email }).save()
-        // console.log(user._id,"user mongo id ")
         if ( user ) {
-            const accessToken = generateAccessToken({ userName })
+            const id = user._id
+            const accessToken = generateAccessToken({ id })
                 res.cookie('accessToken' , accessToken , {
                     httpOnly : true , 
                     secure : true,
                 })
-            const refreshToken = generateRefreshToken({ userName })
+            const refreshToken = generateRefreshToken({ id })
                 res.cookie('refreshToken' , refreshToken , { 
                     httpOnly : true,
                     secure : true ,

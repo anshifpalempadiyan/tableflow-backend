@@ -15,8 +15,8 @@ const refreshAuthentication = async (req, res) => {
                 if (err) {
                     return res.status(406).json({ msg: 'Unauthorized' })
                 } else {
-                    const { userName } = decode
-                    const accessToken = generateAccessToken({ userName })
+                    const { id } = decode
+                    const accessToken = generateAccessToken({ id })
                     res.cookie('accessToken', accessToken, {
                         httpOnly: true,
                         secure: true,
