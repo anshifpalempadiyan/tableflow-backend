@@ -36,8 +36,8 @@ const loginAuthentication = async (req, res) => {
                 res.cookie('refreshToken', refreshToken, {
                     httpOnly: true,
                     secure: true,
-                    // sameSite : 'None',
-                    // maxAge : 24 * 60 *  60 * 1000
+                    sameSite : 'lax',
+                    maxAge : 7 * 24 * 60 * 60 * 1000
                 })
                     const existingUserData = await RefreshToken.updateOne({ userId: userData._id }, { $set: { refreshToken: refreshToken } })
                     console.log("user already existed and updated the token ")

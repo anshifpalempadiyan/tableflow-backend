@@ -28,8 +28,8 @@ const signupAuthentication = async (req, res) => {
                 res.cookie('refreshToken' , refreshToken , { 
                     httpOnly : true,
                     secure : true ,
-                    // sameSite : 'None',
-                    // maxAge : 24 * 60 *  60 * 1000
+                    sameSite : 'lux',
+                    maxAge : 7 * 24 * 60 * 60 * 1000
                 })
             const newUser = await new RefreshToken({ userId : user._id , refreshToken : refreshToken }).save()
             console.log(   "new user token created  ")
