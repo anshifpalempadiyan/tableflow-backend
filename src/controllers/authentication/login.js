@@ -13,13 +13,14 @@ import generateRefreshToken from '../../helpers/authenticationHelpers/generateRe
 const loginAuthentication = async (req, res) => {
     try {
 
-        const { email, password, userName } = req.body
+        const { email, password } = req.body
+        console.log(req.body)
 
-        if (!email || !password || !userName) {
+        if (!email || !password ) {
             return res.status(400).json({ msg: "Enter valid credientials" })
         }
 
-        const userData = await User.findOne({ email, userName })
+        const userData = await User.findOne({ email })
         if (userData) {
             const isPasswordMatching = await bcrypt.compare(password, userData.password)
             if (isPasswordMatching) {
@@ -40,10 +41,10 @@ const loginAuthentication = async (req, res) => {
                 })
                     const existingUserData = await RefreshToken.updateOne({ userId: userData._id }, { $set: { refreshToken: refreshToken } })
                     console.log("user already existed and updated the token ")
-                    return res.status(200).json({ msg: `Welcome ${userName}`, accessToken: accessToken, refreshToken: refreshToken })
+                    return res.status(200).json({ msg: `Welcome ${userData.userName}`, status : true , accessToken: accessToken , userData })
                 } else {
                     console.log("User refresh token history not found")
-                    return res.status(404).json({ msg : "User is restricted from the platform"})
+                    return res.status(404).json({ msg : "User is restricted from the platform" , status : false })
                 }
                 
 

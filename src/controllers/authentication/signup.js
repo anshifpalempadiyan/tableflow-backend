@@ -16,6 +16,7 @@ const signupAuthentication = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10)
         const user = await new User({ userName, password: hashedPassword, email }).save()
+        console.log("user created and looking for ware")
         if ( user ) {
             const id = user._id
             const accessToken = generateAccessToken({ id })
@@ -32,9 +33,9 @@ const signupAuthentication = async (req, res) => {
                 })
             const newUser = await new RefreshToken({ userId : user._id , refreshToken : refreshToken }).save()
             console.log(   "new user token created  ")
-            return res.status(201).json({ msg: "User created" })
+            return res.status(201).json({ status : true , msg: "User created" })
         } else  {
-            return res.status(404).json({ msg : "ERROR user not created"})
+            return res.status(404).json({ status : false , msg : "ERROR user not created"})
         }
 
 

@@ -8,11 +8,11 @@ const logoutAuthentication = async( req , res ) => {
         const refreshTokenData = await RefreshToken.findOneAndUpdate({ refreshToken : refreshToken } , { $set: { refreshToken: null } })
 
         if ( !refreshTokenData ) {
-            return res.json({ msg : "Refresh token not found"})
+            return res.json({ status : false , msg : "Refresh token not found"})
         } else {
             res.clearCookie('accessToken' , { path : '/' })
             res.clearCookie('refreshToken' , { path : '/' })
-            return res.json({ msg : "Refresh token deleted"})
+            return res.json({ status : true , msg : "Refresh token deleted"})
         }
         
     } catch (error) {
