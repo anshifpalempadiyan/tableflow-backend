@@ -21,7 +21,7 @@ const refreshAuthentication = async (req, res) => {
                         httpOnly: true,
                         secure: true,
                         sameSite : 'lax',
-                        maxAge : 15 * 60 
+                        maxAge : 15 * 60 * 1000
                     })
                     return res.json({ accessToken })
                 }
