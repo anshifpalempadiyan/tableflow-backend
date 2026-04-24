@@ -1,4 +1,4 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 
 const tableLayoutSchema = new mongoose.Schema(
     {
@@ -14,9 +14,14 @@ const tableLayoutSchema = new mongoose.Schema(
         column : {
             type : Number,
             required : true
+        },
+        disabledSections : {
+            type : [String],
+            default : []
+
         }
     },
-    {
+    { 
         timestamps : true 
     }
 )
