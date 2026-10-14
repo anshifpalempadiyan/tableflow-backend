@@ -16,7 +16,6 @@ const signupAuthentication = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10)
         const user = await new User({ userName, password: hashedPassword, email }).save()
-        console.log("user created and looking for ware")
         if ( user ) {
             const id = user._id
             const accessToken = generateAccessToken({ id })

@@ -32,7 +32,7 @@ const loginAuthentication = async (req, res) => {
                     httpOnly: true,
                     secure: true,
                     sameSite : 'lax',
-                    maxAge : 15 * 60 
+                    maxAge : 15 * 60 * 1000
                 })
                 const refreshToken = generateRefreshToken({ id })
                 res.cookie('refreshToken', refreshToken, {

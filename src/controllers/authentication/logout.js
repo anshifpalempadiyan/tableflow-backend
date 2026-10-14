@@ -2,25 +2,34 @@ import RefreshToken from "../../models/refreshToken.js"
 
 
 
-const logoutAuthentication = async( req , res ) => {
-    try {
-        const refreshToken = req.cookies?.refreshToken
-        const refreshTokenData = await RefreshToken.findOneAndUpdate({ refreshToken : refreshToken } , { $set: { refreshToken: null } })
+const logoutAuthentication = async (req, res) => {
 
-        if ( !refreshTokenData ) {
-            return res.json({ status : false , msg : "Refresh token not found"})
-        } else {
-            res.clearCookie('accessToken' , { path : '/' })
-            res.clearCookie('refreshToken' , { path : '/' })
-            return res.json({ status : true , msg : "Refresh token deleted"})
+    try {
+
+        res.clearCookie('accessToken', { path: '/' })
+        res.clearCookie('refreshToken', { path: '/' })
+
+        const refreshToken = req.cookies?.refreshToken
+
+
+        if (!refreshToken) {
+            return res.json({ status: true, msg: "Logged out successfully" });
         }
-        
+
+
+        await RefreshToken.deleteOne({ refreshToken: refreshToken } )
+
+        return res.json({ status : true , msg : "Refresh token deleted" })
+
+
     } catch (error) {
+
         console.log("Error in the login", error.message)
-        res.status(500).json({ error: "Internal Server Error" })
+        return res.status(500).json({ status: false, error: "Internal Server Error" });
+
     }
-    
-    
+
+
 
 
 }

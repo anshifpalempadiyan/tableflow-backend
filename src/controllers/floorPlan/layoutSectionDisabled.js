@@ -13,7 +13,7 @@ const layoutSectionDisabled = async (req, res) => {
 
         if (findUser) {
             const disableingSection = await TableLayout.updateOne({ $addToSet: { disabledSections: layoutDisabled } })
-            return res.status(400).json({ status: true, msg: "Table disabled", disableingSection })
+            return res.status(200).json({ status: true, msg: "Table disabled", disableingSection })
 
         } else {
             return res.status(404).json({ status: false, msg: "User not found" })
