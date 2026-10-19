@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 3003
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
 app.use(cors({
   credentials : true,
-  origin : 'http://localhost:3000',
+  origin : ['http://localhost:3000','https://tableflow-frontend.anshifp949.workers.dev'],
 }))
 
 app.use(express.json());
