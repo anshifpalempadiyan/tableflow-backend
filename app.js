@@ -9,6 +9,7 @@ import cookieParser from 'cookie-parser';
 dotenv.config();
 
 const app = express();
+app.set('trust proxy', 1)
 const Name = 'tableflow'
 const PORT = process.env.PORT || 3003
 

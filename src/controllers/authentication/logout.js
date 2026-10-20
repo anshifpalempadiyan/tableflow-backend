@@ -1,4 +1,6 @@
 import RefreshToken from "../../models/refreshToken.js"
+import cookieBase from '../../helpers/authenticationHelpers/cookieOptions.js'
+
 
 
 
@@ -6,20 +8,17 @@ const logoutAuthentication = async (req, res) => {
 
     try {
 
-        res.clearCookie('accessToken', { path: '/' })
-        res.clearCookie('refreshToken', { path: '/' })
-
         const refreshToken = req.cookies?.refreshToken
 
+        res.clearCookie('accessToken', cookieBase)
+        res.clearCookie('refreshToken', cookieBase)
 
-        if (!refreshToken) {
-            return res.json({ status: true, msg: "Logged out successfully" });
+
+        if (refreshToken) {
+            await RefreshToken.deleteOne({ refreshToken })
         }
 
-
-        await RefreshToken.deleteOne({ refreshToken: refreshToken } )
-
-        return res.json({ status : true , msg : "Refresh token deleted" })
+        return res.json({ status: true, msg: "Logged out successfully" })
 
 
     } catch (error) {
@@ -36,3 +35,18 @@ const logoutAuthentication = async (req, res) => {
 
 
 export default logoutAuthentication
+
+// res.clearCookie('accessToken', { path: '/' })
+//         res.clearCookie('refreshToken', { path: '/' })
+
+//         const refreshToken = req.cookies?.refreshToken
+
+
+//         if (!refreshToken) {
+//             return res.json({ status: true, msg: "Logged out successfully" });
+//         }
+
+
+//         await RefreshToken.deleteOne({ refreshToken: refreshToken } )
+
+//         return res.json({ status : true , msg : "Refresh token deleted" })

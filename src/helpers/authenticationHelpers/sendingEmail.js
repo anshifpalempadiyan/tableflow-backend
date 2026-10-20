@@ -1,4 +1,4 @@
-import nodemailer from 'nodemailer';
+// import nodemailer from 'nodemailer';
 import dotenv from 'dotenv'
 dotenv.config();
 
@@ -10,7 +10,7 @@ dotenv.config();
 const sendingEmail = async (userEmail, otp) => {
 
     try {
-        
+
         const emailTemplate = `
         <div style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 40px 20px;">
             <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
@@ -36,33 +36,41 @@ const sendingEmail = async (userEmail, otp) => {
         </div>
     `;
 
-    const transporter = nodemailer.createTransport({
 
-        secure: false,
-        service: 'gmail',
-        auth: {
 
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS
+        const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+
+            method: "POST",
+            headers: {
+
+                "api-key": process.env.BREVO_API_KEY,
+                "Content-Type": "application/json",
+                accept: "application/json"
+
+            },
+
+            body: JSON.stringify({
+
+                sender: { name: "TableFlow", email: process.env.EMAIL_FROM },
+                to: [{ email: userEmail }],
+                subject: 'Your Tableflow Verification Code',
+                textContent: `Your login code is: ${otp}. It will expire in 10 minutes.`,
+                htmlContent: emailTemplate
+
+            })
+        })
+
+        if (!response.ok) {
+            throw new Error("Brevo error: " + (await response.text()));
         }
-    })
 
-    const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: userEmail,
-        subject: 'Your Tableflow Verification Code',
-        text: `Your login code is: ${otp}. It will expire in 10 minutes.`,
-        html: emailTemplate
-    };
-
-    const info = await transporter.sendMail(mailOptions);
-    console.log("Email sent successfully: " + info.response);
+        console.log("Email sent successfully");
 
     } catch (error) {
 
         console.error("Error inside sendingEmail:", error);
         throw new Error("Failed to send verification email");
-        
+
     }
 
 
