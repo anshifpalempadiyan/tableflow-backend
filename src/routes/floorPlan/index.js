@@ -1,9 +1,10 @@
 import express from 'express'
-import layoutCreation from '../../controllers/floorPlan/layoutCreation.js'
 import layoutSectionDisabled from '../../controllers/floorPlan/layoutSectionDisabled.js'
 import layoutSectionEnabling from '../../controllers/floorPlan/layoutSectionEnabling.js'
 import floorPlanGet from '../../controllers/floorPlan/floorPlanGet.js'
 import authenticateToken from '../../helpers/authenticationHelpers/authenticateToken.js'
+import layoutCreationt from '../../controllers/floorPlan/layoutCreation.js'
+import layoutEdit from '../../controllers/floorPlan/layoutEdit.js'
 
 
 
@@ -15,7 +16,8 @@ router.use(authenticateToken)
 
 
 router.get('/get' , floorPlanGet)
-router.post('/create' , layoutCreation )
+router.post('/create' , layoutCreationt )
+router.patch('/layout' , layoutEdit )
 router.patch('/disable', layoutSectionDisabled )
 router.patch('/enable' , layoutSectionEnabling )
 

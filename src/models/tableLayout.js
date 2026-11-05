@@ -34,11 +34,11 @@ const sectionSchema = new mongoose.Schema(
 const tableLayoutSchema = new mongoose.Schema(
     {
         userId : { type : String , required : true , unique : true },
-        rows : { type : Number , required : true , min : 1 , max : 50 },  // means row grid size 
-        columns : { type : Number , required : true , min : 1 , max : 50, }, // means column grid size
+        rows : { type : Number , required : true , min : 1 , max : 20 },  // means row grid size 
+        columns : { type : Number , required : true , min : 1 , max : 20 }, // means column grid size
         tables : { type : [ tableSchema ] , default : [] },
         staff : { type : [ staffSchema ] , default : [] },
-        section : { type : [ sectionSchema ] , default : [] },
+        sections : { type : [ sectionSchema ] , default : [] },
         setupStep : { type : Number , default : 0 , min : 0 , max : 3 }
 
     },
